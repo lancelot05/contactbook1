@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date Added</th>
+            <th scope="col">Contact Name</th>
+            <th scope="col">Contact Number</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        {% for each_contact in contacts %}
+
+        <tr class="table-info">
+            <th scope="row">{{each_contact.date}}</th>
+            <td>{{each_contact.name}}</td>
+            <td>{{each_contact.number}}</td>
+            <td>
+                <form action="delete_contact/{{each_contact.id}}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Danger</button>
+                </form>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock content %}
