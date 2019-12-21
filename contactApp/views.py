@@ -13,7 +13,8 @@ def add_contact(request):
 
     added_name = request.POST.get("contactName")
     added_number = request.POST.get("contactNumber")
-    created_contact = ContactInfo.objects.create(name = added_name, number = added_number)
+    added_email = request.POST.get("contactEmail")
+    created_contact = ContactInfo.objects.create(name = added_name, number = added_number, email = added_email)
 
     return HttpResponseRedirect("/")
     
