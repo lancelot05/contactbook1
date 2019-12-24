@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<form action="/add_contact/" method="post">
+
+    {% csrf_token %}
+
+    <fieldset>
+
+        <legend>Edit Contact</legend>
+
+        <div class="form-group">
+            <label for="contactName">Contact Name</label>
+            <input type="text" class="form-control" id="contactName" name="contactName" value="{{ contactName }}">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="contactNumber">Contact Number</label>
+            <input type="number" class="form-control" id="contactNumber" name="contactNumber"
+                value="{{ contactNumber }}">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="contactEmail" name="contactEmail" aria-describedby="emailHelp"
+                value="{{ contactEmail }}">
+        </div>
+
+        <button type="submit" class="btn btn-success" onclick="showAlert(">Save Changes</button>
+
+        <script>
+            function showAlert(){
+                alert("Changes Saved Successfully.");
+            }
+        </script>
+
+    </fieldset>
+
+</form>
+
+
+{% endblock content %}

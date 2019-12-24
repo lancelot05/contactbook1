@@ -3,6 +3,7 @@ from django.utils import timezone
 from .models import ContactInfo
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -10,6 +11,7 @@ def home(request):
     return render(request, 'ContactApp/index.html')
 
 
+@login_required
 def add_contact(request):
 
     added_name = request.POST.get("contactName")
@@ -44,3 +46,14 @@ def delete_contact(request, contact_id):
     ContactInfo.objects.get(id=contact_id).delete()
 
     return HttpResponseRedirect("/contacts_list")
+
+
+def edit_contact(request, contact_id):
+    edited_contact = ContactInfo.objects.get(id=contact_id)
+    context_dict = {
+        "contactName" : edited_contact.name,
+        "contactNumber" : edited_contact.number,
+        "contactEmail" : edited_contact.email,
+    }
+    ContactInfo.objects.get(id=contact_id).delete
+    return render(request, 'ContactApp/edit.html', context_dict)

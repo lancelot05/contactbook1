@@ -11,6 +11,7 @@
             <th scope="col">Contact Name</th>
             <th scope="col">Contact Number</th>
             <th scope="col">Contact Email</th>
+            <th scope="col">Edit</th>
             <th scope="col">Delete</th>
         </tr>
     </thead>
@@ -25,7 +26,13 @@
             <td>{{each_contact.number}}</td>
             <td>{{each_contact.email}}</td>
             <td>
-                <form action="delete_contact/{{each_contact.id}}" method="post">
+                <form action="edit_contact/{{each_contact.id}}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form action="/delete_contact/{{each_contact.id}}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Remove</button>
                 </form>
