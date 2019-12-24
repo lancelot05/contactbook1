@@ -18,22 +18,21 @@ def add_contact(request):
     added_number = request.POST.get("contactNumber")
     added_email = request.POST.get("contactEmail")
 
-    contacts = ContactInfo.objects.all()
+    contacts = ContactInfo.objects.filter(user=request.user)
 
     for contact in contacts:
         if contact.name == added_name:
             messages.info(request, 'The Contact Name already exists! Try something different.')
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/loggedin/")
 
-    created_contact = ContactInfo.objects.create(name = added_name, number = added_number, email = added_email)
+    ContactInfo.objects.create(user = request.user, name = added_name, number = added_number, email = added_email)
 
     return HttpResponseRedirect("/")
     
 
-
+@login_required
 def contacts_list(request):
-
-    contacts = ContactInfo.objects.all().order_by("-date")
+    contacts = ContactInfo.objects.filter(user=request.user).order_by("-date")
 
     context_dict = {
         "contacts" : contacts,
@@ -41,19 +40,27 @@ def contacts_list(request):
 
     return render(request, 'ContactApp/list.html', context_dict)
 
+
+@login_required
 def delete_contact(request, contact_id):
 
-    ContactInfo.objects.get(id=contact_id).delete()
+    ContactInfo.objects.filter(user=request.user).get(id=contact_id).delete()
 
     return HttpResponseRedirect("/contacts_list")
 
 
+@login_required
 def edit_contact(request, contact_id):
-    edited_contact = ContactInfo.objects.get(id=contact_id)
+    edited_contact = ContactInfo.objects.filter(user=request.user).get(id=contact_id)
     context_dict = {
         "contactName" : edited_contact.name,
         "contactNumber" : edited_contact.number,
         "contactEmail" : edited_contact.email,
     }
-    ContactInfo.objects.get(id=contact_id).delete
+    ContactInfo.objects.filter(user=request.user).get(id=contact_id).delete
     return render(request, 'ContactApp/edit.html', context_dict)
+
+
+
+
+
