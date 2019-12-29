@@ -25,6 +25,7 @@ sqlparse = "==0.3.0"
 whitenoise = "==5.0.1"
 wrapt = "==1.11.2"
 Django = "==3.0.1"
+crispy-forms = "*"
 
 [requires]
 python_version = "3.8"
