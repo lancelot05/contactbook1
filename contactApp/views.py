@@ -57,7 +57,7 @@ def edit_contact(request, contact_id):
         "contactNumber" : edited_contact.number,
         "contactEmail" : edited_contact.email,
     }
-    ContactInfo.objects.filter(user=request.user).get(id=contact_id).delete
+    ContactInfo.objects.filter(user=request.user).get(id=contact_id).delete()
     return render(request, 'ContactApp/edit.html', context_dict)
 
 
